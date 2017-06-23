@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Welcome | {% endblock %}
+
+<style>
+{%block style %}
+.navbar-static-top {
+ margin-bottom: 0px;
+
+}
+
+
+.jumbotron{
+    background-color:#0E3D14;
+    color: #FFF
+   }
+{% endblock %}
+</style>
+{% block jumbotron %}
+{% if not request.user.is_authenticated %}
+<!-- Main component for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+    <div class="row">
+          <div class='col-sm-6'>
+        <h1>My First Project</h1>
+        <p>This is my first python django project.</p>
+        <p>A new start and a fresh begining.</p>
+<p>
+          <a class="btn btn-lg btn-primary" href="" role="button">Join Us &raquo;</a>
+   </p>
+      </div>
+          <div class='col-sm-6'></div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/QMUjqR-VQAY" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+<h1>You are logged in!!</h1>
+
+{% if queryset %}
+<h2>Welcome Staff</h2>
+<table class="table">
+    {% for instance in queryset %}
+    <tr><td>{{ forloop.counter }}</td><td>{{ instance.email }}</td><td>{{ instance.full_name }}</td><td>{{ instance.timestamp|timesince }} ago</td></tr>
+{% endfor %}
+</table>
+{% endif %}
+
+
+{% else %}
+
+<!--{{ block.super }} -->
+<div class="row">
+
+  <div class="col-xs-6 col-md-3 pull-right">
+
+<p>{{ title }}</p>
+
+<form method="POST" action="" >{% csrf_token %}
+{{ form|crispy }}
+
+    <input class = 'btn btn-primary' type="submit" value="submit" />
+</form>
+  </div>
+    <div class='col-xs-3'>
+    <p class="lead">Django&amp; Bootstrap
+        <br /><br/>
+        <i class="fa fa-bolt fa-5x"></i></p>
+    </div>
+
+    <div class='col-xs-3'>
+    <p class="lead">For beginers<br /><br />
+    <i class="fa fa-thumbs-up fa-5x"></i>
+    </p>
+    </div>
+
+    <div class='col-xs-3'>
+    <p class="lead">Trying hard<br /><br />
+    <i class="fa fa-circle-o-notch fa-5x"></i>
+    </p>
+    </div>
+</div></div>
+
+
+</form>
+{% endif %}
+
+   {% endblock %}
